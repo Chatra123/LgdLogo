@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LgdLogo", "LgdLogo\LgdLogo.csproj", "{279ADFAF-3C61-4FB1-8405-C3FEBA8B9F66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_LgdLogo", "Test_LgdLogo\Test_LgdLogo.csproj", "{2A36655F-84BD-45CC-92B7-5071A7AF4274}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LgdViewer", "LgdViewer\LgdViewer.csproj", "{06A66926-68C5-44E7-95FA-90BAA6E13126}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{279ADFAF-3C61-4FB1-8405-C3FEBA8B9F66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{279ADFAF-3C61-4FB1-8405-C3FEBA8B9F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{279ADFAF-3C61-4FB1-8405-C3FEBA8B9F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{279ADFAF-3C61-4FB1-8405-C3FEBA8B9F66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A36655F-84BD-45CC-92B7-5071A7AF4274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A36655F-84BD-45CC-92B7-5071A7AF4274}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A36655F-84BD-45CC-92B7-5071A7AF4274}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A36655F-84BD-45CC-92B7-5071A7AF4274}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06A66926-68C5-44E7-95FA-90BAA6E13126}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06A66926-68C5-44E7-95FA-90BAA6E13126}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06A66926-68C5-44E7-95FA-90BAA6E13126}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06A66926-68C5-44E7-95FA-90BAA6E13126}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

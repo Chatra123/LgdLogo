@@ -60,7 +60,6 @@ namespace LgdLogo
         if (w * h != pix_count)
         {
           throw new Exception("invalid logo size");
-          //return false;
         }
       }
 

@@ -352,15 +352,16 @@ Drop the file
         //デスクトップに作成
         var savepath = new Func<string>(() =>
         {
-          var desktop = System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-          var time = DateTime.Now.ToString("HHmmss");
-          var name = "LgdViewer.ldp2";
-          var path = Path.Combine(desktop, time + " - " + name);
+          string desktop = System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+          string timecode = DateTime.Now.ToString("HHmmss");
+          string name = "LgdViewer.ldp2";
+          string path = Path.Combine(desktop, timecode + " - " + name);
           return path;
         })();
 
         //同名のファイルがある？
-        if (File.Exists(savepath)) return false;
+        if (File.Exists(savepath)) 
+          return false;
 
         if (savelist != null)
         {
@@ -387,32 +388,31 @@ Drop the file
 
 
         //データが１つならデスクトップに保存
-        //　　　　２つ以上ならフォルダ作成
+        //　　　　２つ以上ならフォルダを作成してから保存
         var desktop = System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-        string saveDir = desktop;
 
-        if (2 <= logolist.Count)
+        string saveDir = "";
         {
-          var dirName_base = Path.GetFileName(srcpath);
-          dirName_base = ReplaceInvalidChar(dirName_base);
-
-          var dirName_save = dirName_base;
-          for (int i = 2; i <= 4; i++)
+          if (logolist.Count == 1)
           {
-            saveDir = Path.Combine(desktop, dirName_save);
+            saveDir = desktop;
+          }
+          else
+          {
+            var dirName = Path.GetFileName(srcpath);
+            dirName = ReplaceInvalidChar(dirName);
+            saveDir = Path.Combine(desktop, dirName);
 
+            //同名のファイル or フォルダがある？
             if (File.Exists(saveDir))
             {
-              //フォルダと同名のファイルがある
-              dirName_save = dirName_base + " - " + i;
-              continue;
+              var timecode = DateTime.Now.ToString("HHmmss.fff");
+              saveDir = saveDir + " - " + timecode;
             }
-            else
-              //フォルダ名決定
-              break;
-          }
 
-          Directory.CreateDirectory(saveDir);
+            //フォルダ作成
+            Directory.CreateDirectory(saveDir);
+          }
         }
 
 
@@ -434,7 +434,7 @@ Drop the file
     /// ファイル名に使えない文字を _ に置換
     /// </summary>
     static string ReplaceInvalidChar(string filename)
-    {
+    {  
       foreach (char c in Path.GetInvalidFileNameChars())
         filename = filename.Replace(c, '_');
 

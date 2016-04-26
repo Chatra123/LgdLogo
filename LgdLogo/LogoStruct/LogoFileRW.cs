@@ -42,9 +42,9 @@ namespace LgdLogo
 
         return logofile;
       }
-      catch (Exception e)
+      catch
       {
-        throw e;
+        throw;
       }
     }
 
@@ -102,9 +102,9 @@ namespace LgdLogo
           Write_LogoData(ver, logodata, writer);
         }
       }
-      catch (Exception e)
+      catch
       {
-        throw e;
+        throw;
       }
     }
 

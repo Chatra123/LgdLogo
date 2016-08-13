@@ -8,7 +8,6 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Windows.Media.Imaging;
 
 
 #region title

@@ -94,7 +94,7 @@ namespace LgdLogo.Test
         byteBGR = dblBGR.Select(value => (Byte)value).ToArray();
 
         // BGR  -->  CrCb 
-        i16CbCr = YC48Converter.BGR_to_YC48(TestColor.dblBGR);
+        i16CbCr = YC48Conv.BGR_to_YC48(TestColor.dblBGR);
         dblCbCr = i16CbCr.Select(value => (double)value).ToArray();
         intCbCr = i16CbCr.Select(value => (int)value).ToArray();
         byteCbCr = i16CbCr.Select(value => (Byte)value).ToArray();
@@ -149,10 +149,10 @@ namespace LgdLogo.Test
     public static void BGR_to_YC48()
     {
       //double型で計算
-      Int16[] yc48_A = YC48Converter.BGR_to_YC48(TestColor.dblBGR);
+      Int16[] yc48_A = YC48Conv.BGR_to_YC48(TestColor.dblBGR);
 
       //int型で計算
-      Int16[] yc48_B = YC48Converter.BGR_to_YC48(TestColor.byteBGR);
+      Int16[] yc48_B = YC48Conv.BGR_to_YC48(TestColor.byteBGR);
 
       //diff
       var diff_A = tool.Check_diff(TestColor.dblBGR, yc48_A);
@@ -174,10 +174,10 @@ namespace LgdLogo.Test
     public static void YC48_to_BGR()
     {
       //double型で計算
-      Byte[] bgr_A = YC48Converter.YC48_to_BGR(TestColor.dblCbCr);
+      Byte[] bgr_A = YC48Conv.YC48_to_BGR(TestColor.dblCbCr);
 
       //int型で計算
-      Byte[] bgr_B = YC48Converter.YC48_to_BGR(TestColor.i16CbCr);
+      Byte[] bgr_B = YC48Conv.YC48_to_BGR(TestColor.i16CbCr);
 
       //diff
       var diff_A = tool.Check_diff(TestColor.dblCbCr, bgr_A);
@@ -204,11 +204,11 @@ namespace LgdLogo.Test
       Byte[] byte_bgr = TestColor.byteBGR;
 
       //BGR  -->  YC48
-      Int16[] yc48 = YC48Converter.BGR_to_YC48(byte_bgr);
+      Int16[] yc48 = YC48Conv.BGR_to_YC48(byte_bgr);
 
       //          revert
       //          YCbCr  --> BGR
-      Byte[] rvt_bgr = YC48Converter.YC48_to_BGR(yc48);
+      Byte[] rvt_bgr = YC48Conv.YC48_to_BGR(yc48);
 
       //check result
       var diff = tool.Check_diff(byte_bgr, rvt_bgr);
@@ -236,14 +236,14 @@ namespace LgdLogo.Test
       double[] dbl_bgr = TestColor.dblBGR;
 
       //BGR  -->  YC48
-      Int16[] i16_yc48 = YC48Converter.BGR_to_YC48(dbl_bgr);
+      Int16[] i16_yc48 = YC48Conv.BGR_to_YC48(dbl_bgr);
 
       //double型で計算するYC48_to_BGR()は引数にdoubleしかとれない
       double[] dbl_yc48 = i16_yc48.Select(value => (double)value).ToArray();
 
       //          revert
       //          YCbCr  --> BGR
-      Byte[] rvt_bgr = YC48Converter.YC48_to_BGR(dbl_yc48);
+      Byte[] rvt_bgr = YC48Conv.YC48_to_BGR(dbl_yc48);
 
       //check result
       var diff = tool.Check_diff(dbl_bgr, rvt_bgr);
@@ -272,7 +272,7 @@ namespace LgdLogo.Test
       watch.Restart();
       for (int i = 0; i < 1000 * 1000; i++)
       {
-        Int16[] yc48_A = YC48Converter.BGR_to_YC48(TestColor.dblBGR);
+        Int16[] yc48_A = YC48Conv.BGR_to_YC48(TestColor.dblBGR);
       }
       watch.Stop();
       Trace.WriteLine(String.Format("{0}  {1}ms", "calc double", watch.ElapsedMilliseconds));       //1127 ms
@@ -281,7 +281,7 @@ namespace LgdLogo.Test
       watch.Restart();
       for (int i = 0; i < 1000 * 1000; i++)
       {
-        Int16[] yc48_B = YC48Converter.BGR_to_YC48(TestColor.byteBGR);
+        Int16[] yc48_B = YC48Conv.BGR_to_YC48(TestColor.byteBGR);
       }
       watch.Stop();
       Trace.WriteLine(String.Format("{0}  {1}ms", "calc int   ", watch.ElapsedMilliseconds));       //116 ms
@@ -301,29 +301,29 @@ namespace LgdLogo.Test
       Size size = srcbmp.Size;
 
       //Bitmap  --> BGR
-      Byte[] src_bgr = BitmapConverter.ToByte(srcbmp);
+      Byte[] src_bgr = BitmapConv.ToByte(srcbmp);
 
       //BGR  -->  YC48
-      Int16[] src_yc48 = YC48Converter.BGR_to_YC48(src_bgr);
+      Int16[] src_yc48 = YC48Conv.BGR_to_YC48(src_bgr);
 
 
       //BGR  -->  Bitmap
-      Bitmap bmp_bgr_1 = BitmapConverter.BGR_to_Bitmap(src_bgr, size);
-      Bitmap bmp_bgr_2 = BitmapConverter.BGR_to_Bitmap__for(src_bgr, size);  //これだけFormat32bppArgb
-      Bitmap bmp_bgr_3 = BitmapConverter.BGR_to_Bitmap__SetPixel(src_bgr, size);
+      Bitmap bmp_bgr_1 = BitmapConv.BGR_to_Bitmap(src_bgr, size);
+      Bitmap bmp_bgr_2 = BitmapConv.BGR_to_Bitmap__for(src_bgr, size);  //これだけFormat32bppArgb
+      Bitmap bmp_bgr_3 = BitmapConv.BGR_to_Bitmap__SetPixel(src_bgr, size);
 
       //YC48  -->  Bitmap
       //内部でBGR_to_Bitmap(Byte[],size)を使用している
       //bmp_bgr_1の処理と同等
-      Bitmap bmp_yc48_1 = YC48Converter.YC48_to_Bitmap(src_yc48, size);
+      Bitmap bmp_yc48_1 = YC48Conv.YC48_to_Bitmap(src_yc48, size);
 
 
       //check
       //Bitmap  -->  Byte[]
-      Byte[] byte_bgr_1 = BitmapConverter.ToByte(bmp_bgr_1);
-      Byte[] byte_bgr_2 = BitmapConverter.ToByte(bmp_bgr_2);    //ArgbなのでAlphaが増えている
-      Byte[] byte_bgr_3 = BitmapConverter.ToByte(bmp_bgr_3);
-      Byte[] byte_yc48_1 = BitmapConverter.ToByte(bmp_yc48_1);  //Bitmapから取り出すデータはBGR
+      Byte[] byte_bgr_1 = BitmapConv.ToByte(bmp_bgr_1);
+      Byte[] byte_bgr_2 = BitmapConv.ToByte(bmp_bgr_2);    //ArgbなのでAlphaが増えている
+      Byte[] byte_bgr_3 = BitmapConv.ToByte(bmp_bgr_3);
+      Byte[] byte_yc48_1 = BitmapConv.ToByte(bmp_yc48_1);  //Bitmapから取り出すデータはBGR
 
       var diff_1 = tool.Check_diff(src_bgr, byte_bgr_1);
       var diff_2 = tool.Check_diff(src_bgr, byte_bgr_2);        //Alphaが追加されているので大きな値になる
@@ -359,9 +359,9 @@ namespace LgdLogo.Test
           Preset_LOGO_PIXEL.Blue,  Preset_LOGO_PIXEL.Black,
         };
 
-      Int16[] yc48 = YC48Converter.LogoPixel_to_YC48(logo_pixel_list);
-      Byte[] bgr = YC48Converter.YC48_to_BGR(yc48);
-      Byte[] rgb = ColorConverter.Swap_RGB_to_BGR(bgr);
+      Int16[] yc48 = YC48Conv.LogoPixel_to_YC48(logo_pixel_list);
+      Byte[] bgr = YC48Conv.YC48_to_BGR(yc48);
+      Byte[] rgb = ColorConv.Swap_RGB_to_BGR(bgr);
 
       //
       //check result vlaue yourself
@@ -385,7 +385,7 @@ namespace LgdLogo.Test
       foreach (int value in int_valueList)
       {
         const int Min = 0, Max = 255;
-        Byte clamped = ColorConverter.Clamp255(value);
+        Byte clamped = ColorConv.Clamp255(value);
 
         //out of range?
         if (clamped < Min || Max < clamped)
@@ -399,7 +399,7 @@ namespace LgdLogo.Test
       foreach (int value in int_valueList)
       {
         const int Min = 0, Max = 4096;
-        Int16 clamped = ColorConverter.Clamp4096(value);
+        Int16 clamped = ColorConv.Clamp4096(value);
 
         //out of range?
         if (clamped < Min || Max < clamped)
@@ -413,7 +413,7 @@ namespace LgdLogo.Test
       foreach (int value in int_valueList)
       {
         const int Min = -2048, Max = 2048;
-        Int16 clamped = ColorConverter.Clamp2048(value);
+        Int16 clamped = ColorConv.Clamp2048(value);
 
         //out of range?
         if (clamped < Min || Max < clamped)
@@ -430,7 +430,7 @@ namespace LgdLogo.Test
       foreach (int value in dbl_valueList)
       {
         const double Min = 0.0, Max = 1.0;
-        Single clamped = ColorConverter.ClampOne(value);
+        Single clamped = ColorConv.ClampOne(value);
 
         //out of range?
         if (clamped < Min || Max < clamped)

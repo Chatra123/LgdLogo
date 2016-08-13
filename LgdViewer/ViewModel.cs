@@ -265,12 +265,11 @@ Drop the file
       }
     }
 
-
     public BitmapImage Image
     {
       get
       {
-        return LogoData.Image;
+        return BitmapConv_WPF.ToBitmapImage( LogoData.Image);
       }
     }
 

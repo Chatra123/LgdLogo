@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using System.Windows.Media.Imaging;  //BitmapImage  for WPF
 
 
 namespace LgdLogo
@@ -14,7 +13,7 @@ namespace LgdLogo
   /// <summary>
   /// PixelYCから各形式に変換
   /// </summary>
-  public static class YC48Converter
+  public static class YC48Conv
   {
     /*
      * AviUtl
@@ -65,9 +64,9 @@ namespace LgdLogo
         int Cb = ((-2775 * R + 240) >> 10) + ((-5449 * G + 515) >> 10) + ((8224 * B + 256) >> 10);
         int Cr = ((8224 * R + 256) >> 10) + ((-6887 * G + 110) >> 10) + ((-1337 * B + 646) >> 10);
 
-        YCbCr[pix * 3 + 0] = ColorConverter.Clamp4096(Y_);
-        YCbCr[pix * 3 + 1] = ColorConverter.Clamp2048(Cb);
-        YCbCr[pix * 3 + 2] = ColorConverter.Clamp2048(Cr);
+        YCbCr[pix * 3 + 0] = ColorConv.Clamp4096(Y_);
+        YCbCr[pix * 3 + 1] = ColorConv.Clamp2048(Cb);
+        YCbCr[pix * 3 + 2] = ColorConv.Clamp2048(Cr);
       }
 
       return YCbCr;
@@ -80,9 +79,9 @@ namespace LgdLogo
     /// </summary>
     public static Int16[] BGR_to_YC48(double[] bgr)
     {
-      double[] ycbcr255 = ColorConverter.BGR_to_YCbCr(bgr);
-      double[] ycbcr4096 = ColorConverter.Range255_to_4096(ycbcr255);
-      Int16[] ycbcr_round = ColorConverter.ClampYC48(ycbcr4096);
+      double[] ycbcr255 = ColorConv.BGR_to_YCbCr(bgr);
+      double[] ycbcr4096 = ColorConv.Range255_to_4096(ycbcr255);
+      Int16[] ycbcr_round = ColorConv.ClampYC48(ycbcr4096);
 
       return ycbcr_round;
     }
@@ -104,9 +103,9 @@ namespace LgdLogo
         int G = (255 * Y_ + (((-5616 * Cb >> 16) + (-11655 * Cr >> 16) + 3) << 10)) >> 12;
         int B = (255 * Y_ + (((28919 * Cb >> 16) + 3) << 10)) >> 12;
 
-        BGR[pix * 3 + 0] = ColorConverter.Clamp255(B);
-        BGR[pix * 3 + 1] = ColorConverter.Clamp255(G);
-        BGR[pix * 3 + 2] = ColorConverter.Clamp255(R);
+        BGR[pix * 3 + 0] = ColorConv.Clamp255(B);
+        BGR[pix * 3 + 1] = ColorConv.Clamp255(G);
+        BGR[pix * 3 + 2] = ColorConv.Clamp255(R);
       }
 
       return BGR;
@@ -119,9 +118,9 @@ namespace LgdLogo
     /// </summary>
     public static Byte[] YC48_to_BGR(double[] yc48)
     {
-      double[] Bgr4096 = ColorConverter.YCbCr_to_BGR(yc48);
-      double[] Bgr255 = ColorConverter.Range4096_to_255(Bgr4096);
-      Byte[] Bgr_round = ColorConverter.Clamp255(Bgr255);
+      double[] Bgr4096 = ColorConv.YCbCr_to_BGR(yc48);
+      double[] Bgr255 = ColorConv.Range4096_to_255(Bgr4096);
+      Byte[] Bgr_round = ColorConv.Clamp255(Bgr255);
 
       return Bgr_round;
     }
@@ -133,7 +132,7 @@ namespace LgdLogo
     public static Bitmap YC48_to_Bitmap(Int16[] yc48, Size size)
     {
       Byte[] Bgr = YC48_to_BGR(yc48);
-      Bitmap Bmp = BitmapConverter.BGR_to_Bitmap(Bgr, size);
+      Bitmap Bmp = BitmapConv.BGR_to_Bitmap(Bgr, size);
 
       return Bmp;
     }
@@ -194,9 +193,9 @@ namespace LgdLogo
     /// </summary>
     public static Bitmap LogoPixel_to_Bitmap(List<LOGO_PIXEL> logo_pixel_List, Size size)
     {
-      var yc48 = YC48Converter.LogoPixel_to_YC48(logo_pixel_List);
-      Byte[] bgr = YC48Converter.YC48_to_BGR(yc48);
-      Bitmap bmp = BitmapConverter.BGR_to_Bitmap(bgr, size);
+      var yc48 = YC48Conv.LogoPixel_to_YC48(logo_pixel_List);
+      Byte[] bgr = YC48Conv.YC48_to_BGR(yc48);
+      Bitmap bmp = BitmapConv.BGR_to_Bitmap(bgr, size);
       return bmp;
     }
 

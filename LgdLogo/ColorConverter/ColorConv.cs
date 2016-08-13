@@ -30,7 +30,7 @@ namespace LgdLogo
   /// 色変換
   /// 基本的に全てdoubleで計算する。
   /// </summary>
-  public static class ColorConverter
+  public static class ColorConv
   {
     /// <summary>
     /// RGBをYCrCbに変換

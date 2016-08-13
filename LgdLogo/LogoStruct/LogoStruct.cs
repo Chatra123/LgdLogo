@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Drawing;
-using System.Windows.Media.Imaging;
 using System.Collections.ObjectModel;
 
 #region title
@@ -27,7 +26,7 @@ namespace LgdLogo
   [StructLayout(LayoutKind.Sequential, Pack = 1)]
   public class FileHeader
   {
-    //constはldgファイルに保存されない。
+    //constはlgdファイルに保存されない。
     public const string Str_v1 = "<logo data file ver0.1>";
     public const string Str_v2 = "<logo data file ver0.2>";
     public const int Str_FixSize = 28;
@@ -57,15 +56,17 @@ namespace LgdLogo
     public List<LOGO_PIXEL> Pixels = new List<LOGO_PIXEL>();
 
     //Imageはファイルに保存しない
-    private BitmapImage _image;
-    public BitmapImage Image    //WPFでの表示用
+    private Bitmap _image;
+    public Bitmap Image
     {
       get
       {
-        _image = _image ?? this.GetBitmapImage();
+        _image = _image ?? this.GetBitmap();
         return _image;
       }
     }
+
+
   }
 
 
@@ -256,8 +257,8 @@ namespace LgdLogo
 
     private static LOGO_PIXEL Rgb255_to_LogoPixel(Byte[] rgb)
     {
-      Byte[] bgr = ColorConverter.Swap_RGB_to_BGR(rgb);
-      Int16[] yc48 = YC48Converter.BGR_to_YC48(new double[] { bgr[0], bgr[1], bgr[2] });
+      Byte[] bgr = ColorConv.Swap_RGB_to_BGR(rgb);
+      Int16[] yc48 = YC48Conv.BGR_to_YC48(new double[] { bgr[0], bgr[1], bgr[2] });
 
       var logo_pixel = new LOGO_PIXEL()
       {

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Drawing;
-using System.Windows.Media.Imaging;
 
 
 namespace LgdLogo
@@ -91,22 +90,9 @@ namespace LgdLogo
       public static Bitmap GetBitmap(this LogoData logoData)
       {
         var size = logoData.LogoImageSize();
-        var bmp = YC48Converter.LogoPixel_to_Bitmap(logoData.Pixels, size);
+        var bmp = YC48Conv.LogoPixel_to_Bitmap(logoData.Pixels, size);
         return bmp;
       }
-
-
-      /// <summary>
-      /// Pixel　→　BitmapImage
-      /// </summary>
-      public static BitmapImage GetBitmapImage(this LogoData logoData)
-      {
-        var size = logoData.LogoImageSize();
-        var bmp = YC48Converter.LogoPixel_to_Bitmap(logoData.Pixels, size);
-        var bmpImage = BitmapConverter.ToBitmapImage(bmp);
-        return bmpImage;
-      }
-
 
     }
   }
